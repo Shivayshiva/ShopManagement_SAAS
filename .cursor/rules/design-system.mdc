@@ -1,0 +1,16 @@
+---
+description: Use the ShopManage design tokens with Tailwind and shadcn
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# Design system
+
+Colors, type, radius, and shadows live in `app/globals.css`. shadcn components in `components/ui` already consume those tokens.
+
+- Use semantic utilities: `bg-background`, `bg-surface`, `bg-card`, `bg-muted`, `bg-primary`, `text-foreground`, `text-muted-foreground`, `text-primary`, `text-success`, `text-warning`, `border-border`, `ring-primary`, `bg-inverse`, `text-inverse-foreground`.
+- Type: `font-sans` is Geist (UI and body), `font-heading` is Plus Jakarta Sans (titles), `font-mono` is Geist Mono. Use `Type` from `@/components/design-system` for display, heading, title, eyebrow, body, caption, and mono. Do not set a new `font-family` in a component.
+- Use `Section` and `SectionIntro` from `@/components/design-system` for page sections. Use `IconWell` for tinted icon containers.
+- Use shadcn `Button`, `Card`, `Badge`, and the other `components/ui` primitives instead of restyling raw elements with palette colors.
+- Do not add `slate-*`, `blue-*`, `emerald-*`, or hex colors in components. Change the token in `app/globals.css` when the brand color needs to change.
+---
