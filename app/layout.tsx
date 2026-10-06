@@ -48,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {themeInitScript}  
         </Script>
 
-        <SiteShell>{children}</SiteShell>
+        {children}
       </body>
     </html>
   );

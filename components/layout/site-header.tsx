@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { cn } from "cn"
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 const links = [
@@ -18,9 +19,16 @@ const links = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+  const auth = pathname === "/register" || pathname === "/login"
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-surface/90 backdrop-blur">
+    <header
+      className={cn(
+        "sticky top-0 z-40 border-b border-border bg-surface/90 backdrop-blur",
+        auth && "lg:ml-[42%] lg:w-[58%]"
+      )}
+    >
       <Container className="flex h-16 items-center justify-between gap-4">
         <Logo />
         <nav className="hidden items-center gap-7 text-sm font-medium text-muted-foreground md:flex">

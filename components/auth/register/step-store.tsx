@@ -32,7 +32,7 @@ export function StepStore({
 
   return (
     <form onSubmit={handleSubmit(onNext)} noValidate>
-      <fieldset disabled={pending} className="grid gap-5 sm:grid-cols-2">
+      <fieldset disabled={pending} className="grid gap-4 sm:grid-cols-2">
         <TextField
           control={control}
           name="storeName"

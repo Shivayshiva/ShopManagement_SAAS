@@ -28,7 +28,7 @@ export function StepOrganization({
 
   return (
     <form onSubmit={handleSubmit(onNext)} noValidate>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <TextField
           control={control}
           name="businessName"

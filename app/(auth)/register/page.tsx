@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <section className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-4 py-12 sm:py-16">
-      <div className="mb-8 text-center">
+    <div className="flex min-h-0 flex-1 flex-col px-4 py-4 sm:px-8 lg:px-10 lg:py-6">
+      <div className="mb-4 shrink-0 text-center">
         <Type as="h1" variant="heading">
-          Start Free Trial
+          Onboard Your Business
         </Type>
         <Type variant="body" className="mt-2">
           Create your Sirsa-SaaS account to set up your first business.
@@ -23,12 +23,12 @@ export default function RegisterPage() {
 
       <RegisterForm action={registerAccount} />
 
-      <Type variant="body" className="mt-6 text-center text-sm">
+      <Type variant="body" className="mt-4 shrink-0 text-center text-base">
         Already have an account?{" "}
         <Link href="/login" className="font-medium text-primary underline-offset-4 hover:underline">
           Log in
         </Link>
       </Type>
-    </section>
+    </div>
   )
 }

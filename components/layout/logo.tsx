@@ -18,7 +18,7 @@ export function Logo({
         className
       )}
     >
-      <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+      <span className="flex size-8 items-center justify-center rounded-lg bg-foreground text-background">
         <ShoppingBag className="size-4" />
       </span>
       Sirsa-SaaS

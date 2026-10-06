@@ -38,24 +38,9 @@ const columns = [
 export function SiteFooter() {
   return (
     <footer className="bg-inverse text-inverse-muted">
-      <Container className="py-14 text-center">
-        <Type as="h2" variant="heading" className="text-inverse-foreground">
-          Take Control of Your Shop Today
-        </Type>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-inverse-muted sm:text-base">
-          Start a free trial and run billing, stock, customers, and every shop
-          from one dashboard.
-        </p>
-        <Link
-          href="/register"
-          className={cn(buttonVariants(), "mt-6 h-10 rounded-lg px-5")}
-        >
-          Start Free Trial
-        </Link>
-      </Container>
       <Container>
         <Separator className="bg-inverse-foreground/10" />
-        <div className="grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <Logo inverted />
             <p className="mt-3 max-w-xs text-sm text-inverse-muted">
@@ -77,10 +62,6 @@ export function SiteFooter() {
             </div>
           ))}
         </div>
-        <Separator className="bg-inverse-foreground/10" />
-        <p className="py-5 text-xs text-inverse-muted">
-          © {new Date().getFullYear()} Sirsa-SaaS. All rights reserved.
-        </p>
       </Container>
     </footer>
   )

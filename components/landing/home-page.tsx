@@ -10,10 +10,11 @@ import { Pricing } from "@/components/landing/pricing"
 import { Problems } from "@/components/landing/problems"
 import { Security } from "@/components/landing/security"
 import { Testimonials } from "@/components/landing/testimonials"
+import { SiteShell } from "../layout/site-shell"
 
 export function HomePage() {
   return (
-    <>
+    <SiteShell>
       <Hero />
       <LogoCloud />
       <Problems />
@@ -26,6 +27,6 @@ export function HomePage() {
       <Testimonials />
       <Pricing />
       <Faq />
-    </>
+    </SiteShell>
   )
 }

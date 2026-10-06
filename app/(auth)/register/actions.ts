@@ -1,5 +1,6 @@
 "use server"
 
+import { verifiedTargets } from "@/app/(auth)/register/otp-actions"
 import {
   registerSchema,
   type RegisterValues,
@@ -24,9 +25,17 @@ export async function registerAccount(input: RegisterValues): Promise<RegisterRe
     }
   }
 
+  const verified = await verifiedTargets()
+  if (verified.mobile !== parsed.data.account.mobile || verified.email !== parsed.data.account.email) {
+    return {
+      ok: false,
+      step: "account",
+      message: "Verify the OTP for your mobile number and email before continuing.",
+    }
+  }
+
   // TODO: persist the registration once the backend is in place. In one transaction:
-  // create the user (hash `account.password`, never store `confirmPassword`), the
-  // organization, its tax profile and the first store, then start a session.
+  // create the user, the organization, its tax profile and the first store, then start a session.
 
   return { ok: true }
 }

@@ -21,7 +21,7 @@ export function StepActions({
   pending?: boolean
 }) {
   return (
-    <div className="mt-8 flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mt-5 flex flex-col-reverse gap-3 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-end">
       {onBack ? (
         <Button
           type="button"
@@ -29,7 +29,7 @@ export function StepActions({
           size="lg"
           onClick={onBack}
           disabled={pending}
-          className="h-10 px-4"
+          className="h-12 px-5 text-base"
         >
           <ArrowLeft data-icon="inline-start" />
           Back
@@ -37,7 +37,7 @@ export function StepActions({
       ) : (
         <span aria-hidden="true" />
       )}
-      <Button type="submit" size="lg" disabled={pending} className="h-10 px-5">
+      <Button type="submit" size="lg" disabled={pending} className="h-12 px-6 text-base">
         {pending ? <LoaderCircle className="animate-spin" data-icon="inline-start" /> : null}
         {submitLabel}
         {pending ? null : <ArrowRight data-icon="inline-end" />}

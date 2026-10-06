@@ -57,7 +57,7 @@ export function StepTax({ defaultValues, onNext, onBack }: StepProps<TaxValues>)
       />
 
       {gstRegistered === "yes" ? (
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <TextField
             control={control}
             name="gstin"
@@ -94,7 +94,7 @@ export function StepTax({ defaultValues, onNext, onBack }: StepProps<TaxValues>)
       ) : null}
 
       {gstRegistered === "no" ? (
-        <p className="mt-6 flex gap-2.5 rounded-lg bg-muted p-3.5 text-sm text-muted-foreground">
+        <p className="mt-6 flex gap-2.5 rounded-lg bg-muted p-4 text-base text-muted-foreground">
           <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-info" />
           No problem. You can add your GSTIN later from business settings, and GST invoices will
           be enabled once it&apos;s added.

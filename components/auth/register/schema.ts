@@ -15,13 +15,7 @@ const STORE_CODE_REGEX = /^[A-Z0-9][A-Z0-9-]*$/
 const PINCODE_REGEX = /^[1-9]\d{5}$/
 const PHONE_REGEX = /^\d{10,12}$/
 
-export const PASSWORD_RULES = [
-  { id: "length", label: "At least 8 characters", test: (v: string) => v.length >= 8 },
-  { id: "upper", label: "One uppercase letter", test: (v: string) => /[A-Z]/.test(v) },
-  { id: "lower", label: "One lowercase letter", test: (v: string) => /[a-z]/.test(v) },
-  { id: "number", label: "One number", test: (v: string) => /\d/.test(v) },
-  { id: "symbol", label: "One special character", test: (v: string) => /[^A-Za-z0-9]/.test(v) },
-] as const
+const AADHAAR_REGEX = /^\d{12}$/
 
 const personName = (label: string) =>
   z
@@ -31,35 +25,53 @@ const personName = (label: string) =>
     .max(50, `${label} must be 50 characters or fewer`)
     .regex(PERSON_NAME_REGEX, `${label} can only contain letters`)
 
-const password = PASSWORD_RULES.reduce(
-  (schema, rule) => schema.refine(rule.test, `Password needs ${rule.label.toLowerCase()}`),
-  z.string().min(1, "Password is required").max(64, "Password must be 64 characters or fewer")
-)
+const optionalPersonName = (label: string) =>
+  z
+    .string()
+    .trim()
+    .max(50, `${label} must be 50 characters or fewer`)
+    .refine((value) => value === "" || PERSON_NAME_REGEX.test(value), `${label} can only contain letters`)
 
-const passwordPair = z.object({
-  password: z.string().min(1),
-  confirmPassword: z.string().min(1),
-})
+const optionalPlace = (label: string) =>
+  z.string().trim().max(60, `${label} must be 60 characters or fewer`)
 
 /* Step 1 — Create account */
-export const accountSchema = z
-  .object({
-    firstName: personName("First name"),
-    lastName: personName("Last name"),
-    email: z.string().trim().toLowerCase().min(1, "Email is required").pipe(z.email("Enter a valid email address")),
-    mobile: z
-      .string()
-      .min(1, "Mobile number is required")
-      .regex(MOBILE_REGEX, "Enter a valid 10-digit mobile number"),
-    password,
-    confirmPassword: z.string().min(1, "Confirm your password"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    error: "Passwords do not match",
-    // Compare passwords even while other fields on this step are still invalid.
-    when: ({ value }) => passwordPair.safeParse(value).success,
-  })
+export const accountSchema = z.object({
+  firstName: personName("First name"),
+  middleName: optionalPersonName("Middle name"),
+  lastName: optionalPersonName("Last name"),
+  mobile: z
+    .string()
+    .min(1, "Mobile number is required")
+    .regex(MOBILE_REGEX, "Enter a valid 10-digit mobile number"),
+  email: z.string().trim().toLowerCase().min(1, "Email is required").pipe(z.email("Enter a valid email address")),
+  aadhaar: z
+    .string()
+    .min(1, "Aadhaar number is required")
+    .regex(AADHAAR_REGEX, "Enter a 12-digit Aadhaar number"),
+  pan: z
+    .string()
+    .trim()
+    .toUpperCase()
+    .min(1, "PAN is required")
+    .regex(PAN_REGEX, "Enter a valid 10-character PAN"),
+  town: optionalPlace("Town"),
+  city: z
+    .string()
+    .trim()
+    .min(2, "City is required")
+    .max(60, "City must be 60 characters or fewer"),
+  state: z.enum(STATE_NAMES, { error: "Select a state" }),
+  addressLine1: z
+    .string()
+    .trim()
+    .min(5, "Address line 1 is required")
+    .max(250, "Address line 1 must be 250 characters or fewer"),
+  addressLine2: z
+    .string()
+    .trim()
+    .max(250, "Address line 2 must be 250 characters or fewer"),
+})
 
 /* Step 2 — Organization */
 export const organizationSchema = z.object({

@@ -22,17 +22,17 @@ export function Stepper({
           >
             <span
               className={cn(
-                "flex size-7 shrink-0 items-center justify-center rounded-full border text-xs font-semibold transition-colors",
+                "flex size-9 shrink-0 items-center justify-center rounded-full border text-sm font-semibold transition-colors",
                 done && "border-primary bg-primary text-primary-foreground",
                 active && "border-primary bg-accent text-accent-foreground",
                 !done && !active && "border-border bg-surface text-muted-foreground"
               )}
             >
-              {done ? <Check aria-hidden="true" className="size-3.5" /> : index + 1}
+              {done ? <Check aria-hidden="true" className="size-4" /> : index + 1}
             </span>
             <span
               className={cn(
-                "hidden text-sm font-medium whitespace-nowrap md:inline",
+                "hidden text-base font-medium whitespace-nowrap md:inline",
                 active ? "text-foreground" : "text-muted-foreground"
               )}
             >

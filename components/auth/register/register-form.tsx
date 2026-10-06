@@ -18,29 +18,25 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 const STEPS = [
   {
     key: "account",
-    label: "Account",
+    label: "User Account",
     title: "Create your account",
-    description: "You'll use these details to sign in.",
   },
   {
     key: "organization",
     label: "Organization",
     title: "Tell us about your business",
-    description: "This appears on your invoices, receipts and reports.",
   },
   {
     key: "tax",
     label: "Tax",
     title: "Tax details",
-    description: "We use these to generate GST-compliant invoices.",
   },
   {
     key: "store",
     label: "Store",
     title: "Set up your first store",
-    description: "You can add more stores and warehouses later.",
   },
-] as const satisfies readonly { key: RegisterStepKey; label: string; title: string; description: string }[]
+] as const satisfies readonly { key: RegisterStepKey; label: string; title: string }[]
 
 type Draft = Partial<{ [K in RegisterStepKey]: Partial<RegisterValues[K]> }>
 
@@ -140,8 +136,8 @@ export function RegisterForm({
   }
 
   return (
-    <Card className="border-0 bg-surface shadow-raised ring-border">
-      <CardHeader className="gap-5 border-b px-5 pb-5 sm:px-8">
+    <Card className="flex min-h-0 flex-1 flex-col overflow-hidden border-0 bg-surface shadow-raised ring-border">
+      <CardHeader className="shrink-0 gap-2 px-4 pb-1 sm:px-5">
         <Stepper steps={STEPS} current={stepIndex} />
         <div>
           <Type as="p" variant="eyebrow" className="text-xs">
@@ -152,21 +148,18 @@ export function RegisterForm({
             variant="title"
             ref={titleRef}
             tabIndex={-1}
-            className="mt-1 text-xl outline-none"
+            className="mt-1 text-xl"
           >
             {step.title}
-          </Type>
-          <Type variant="body" className="mt-1 text-sm">
-            {step.description}
           </Type>
         </div>
       </CardHeader>
 
-      <CardContent className="px-5 pt-2 pb-2 sm:px-8">
+      <CardContent className="min-h-0 flex-1 overflow-y-auto px-4 pb-3 sm:px-5">
         {error ? (
           <p
             role="alert"
-            className="mb-5 flex gap-2.5 rounded-lg bg-destructive/10 p-3.5 text-sm text-destructive"
+            className="mb-5 flex gap-2.5 rounded-lg bg-destructive/10 p-4 text-base text-destructive"
           >
             <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
             {error}
