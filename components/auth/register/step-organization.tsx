@@ -14,6 +14,7 @@ export function StepOrganization({
   defaultValues,
   onNext,
   onBack,
+  pending,
 }: StepProps<OrganizationValues>) {
   const { control, handleSubmit, getValues } = useForm<OrganizationValues>({
     resolver: zodResolver(organizationSchema),
@@ -77,7 +78,11 @@ export function StepOrganization({
         />
       </div>
 
-      <StepActions onBack={onBack && (() => onBack(getValues()))} />
+      <StepActions
+        onBack={onBack && (() => onBack(getValues()))}
+        submitLabel="Continue"
+        pending={pending}
+      />
     </form>
   )
 }

@@ -25,7 +25,7 @@ const GST_OPTIONS = [
 const alphanumericUpper = (max: number) => (value: string) =>
   value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, max)
 
-export function StepTax({ defaultValues, onNext, onBack }: StepProps<TaxValues>) {
+export function StepTax({ defaultValues, onNext, onBack, pending }: StepProps<TaxValues>) {
   const { control, handleSubmit, getValues, setValue } = useForm<TaxValues>({
     resolver: zodResolver(taxSchema),
     mode: "onTouched",
@@ -101,7 +101,11 @@ export function StepTax({ defaultValues, onNext, onBack }: StepProps<TaxValues>)
         </p>
       ) : null}
 
-      <StepActions onBack={onBack && (() => onBack(getValues()))} />
+      <StepActions
+        onBack={onBack && (() => onBack(getValues()))}
+        submitLabel="Continue to plans"
+        pending={pending}
+      />
     </form>
   )
 }

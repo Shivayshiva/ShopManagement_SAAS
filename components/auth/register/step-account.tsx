@@ -1,10 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, useWatch } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { SelectField, TextareaField, TextField } from "@/components/auth/register/form-fields"
-import { OtpVerify } from "@/components/auth/register/otp-verify"
 import { INDIAN_STATES } from "@/components/auth/register/options"
 import { accountSchema, type AccountValues } from "@/components/auth/register/schema"
 import { StepActions, type StepProps } from "@/components/auth/register/step-actions"
@@ -13,10 +11,7 @@ const digitsOnly = (max: number) => (value: string) => value.replace(/\D/g, "").
 
 const panOnly = (value: string) => value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10)
 
-export function StepAccount({ defaultValues, onNext }: StepProps<AccountValues>) {
-  const [mobileVerified, setMobileVerified] = useState(false)
-  const [emailVerified, setEmailVerified] = useState(false)
-  const [stepError, setStepError] = useState<string | null>(null)
+export function StepAccount({ defaultValues, onNext, pending }: StepProps<AccountValues>) {
   const { control, handleSubmit } = useForm<AccountValues>({
     resolver: zodResolver(accountSchema),
     mode: "onTouched",
@@ -36,22 +31,9 @@ export function StepAccount({ defaultValues, onNext }: StepProps<AccountValues>)
       ...defaultValues,
     },
   })
-  const mobile = useWatch({ control, name: "mobile" }) ?? ""
-  const email = useWatch({ control, name: "email" }) ?? ""
-  const mobileReady = accountSchema.shape.mobile.safeParse(mobile).success
-  const emailReady = accountSchema.shape.email.safeParse(email).success
-
-  function continueAccount(values: AccountValues) {
-    if (!mobileVerified || !emailVerified) {
-      setStepError("Verify the OTP for your mobile number and email before continuing.")
-      return
-    }
-    setStepError(null)
-    onNext(values)
-  }
 
   return (
-    <form onSubmit={handleSubmit(continueAccount)} noValidate>
+    <form onSubmit={handleSubmit(onNext)} noValidate>
       <div className="grid gap-x-4 gap-y-4 sm:grid-cols-6">
         <TextField
           control={control}
@@ -77,45 +59,29 @@ export function StepAccount({ defaultValues, onNext }: StepProps<AccountValues>)
           placeholder="Sharma"
           className="sm:col-span-2"
         />
-        <div className="grid gap-3 sm:col-span-3">
-          <TextField
-            control={control}
-            name="mobile"
-            label="Mobile number"
-            required
-            type="tel"
-            inputMode="numeric"
-            autoComplete="tel-national"
-            prefix="+91"
-            placeholder="98765 43210"
-            normalize={digitsOnly(10)}
-            verified={mobileVerified}
-          />
-          <OtpVerify
-            channel="mobile"
-            target={mobile}
-            ready={mobileReady}
-            onVerifiedChange={setMobileVerified}
-          />
-        </div>
-        <div className="grid gap-3 sm:col-span-3">
-          <TextField
-            control={control}
-            name="email"
-            label="Email"
-            required
-            type="email"
-            autoComplete="email"
-            placeholder="you@example.com"
-            verified={emailVerified}
-          />
-          <OtpVerify
-            channel="email"
-            target={email}
-            ready={emailReady}
-            onVerifiedChange={setEmailVerified}
-          />
-        </div>
+        <TextField
+          control={control}
+          name="mobile"
+          label="Mobile number"
+          required
+          type="tel"
+          inputMode="numeric"
+          autoComplete="tel-national"
+          prefix="+91"
+          placeholder="98765 43210"
+          normalize={digitsOnly(10)}
+          className="sm:col-span-3"
+        />
+        <TextField
+          control={control}
+          name="email"
+          label="Email"
+          required
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          className="sm:col-span-3"
+        />
         <TextField
           control={control}
           name="aadhaar"
@@ -181,13 +147,7 @@ export function StepAccount({ defaultValues, onNext }: StepProps<AccountValues>)
         />
       </div>
 
-      {stepError ? (
-        <p role="alert" className="mt-4 text-sm text-destructive">
-          {stepError}
-        </p>
-      ) : null}
-
-      <StepActions />
+      <StepActions submitLabel="Create account" pending={pending} />
     </form>
   )
 }

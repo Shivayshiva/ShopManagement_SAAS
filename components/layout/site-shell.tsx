@@ -6,7 +6,13 @@ import { usePathname } from "next/navigation"
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const lockViewport = pathname === "/register" || pathname === "/login"
+  const lockViewport =
+    pathname === "/register" || pathname === "/login" || pathname.startsWith("/onboard")
+  const shopApp = /\/organization\/[^/]+\/shop\//.test(pathname)
+
+  if (shopApp) {
+    return <div className="min-h-full flex-1 bg-background text-foreground">{children}</div>
+  }
 
   return (
     <div

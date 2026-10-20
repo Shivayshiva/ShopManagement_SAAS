@@ -173,3 +173,17 @@
     @apply font-heading tracking-tight;
   }
 }
+
+/* Shop content panel stays white; force light text tokens inside it. */
+.shop-panel {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.24 0.02 150);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.02 150);
+  --muted: oklch(0.95 0.01 120);
+  --muted-foreground: oklch(0.45 0.02 140);
+  --border: oklch(0.9 0.01 120);
+  --accent: oklch(0.94 0.06 140);
+  --accent-foreground: oklch(0.32 0.06 150);
+  color: var(--foreground);
+}

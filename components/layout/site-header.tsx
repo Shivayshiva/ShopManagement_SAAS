@@ -20,7 +20,8 @@ const links = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
-  const auth = pathname === "/register" || pathname === "/login"
+  const auth =
+    pathname === "/register" || pathname === "/login" || pathname.startsWith("/onboard")
 
   return (
     <header
